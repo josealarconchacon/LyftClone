@@ -1,0 +1,86 @@
+[
+    {
+        "title":"Madison Square Garden",
+        "subtitle": "4 Pennsylvania Plaza, New York, NY 10001",
+        "lat": 40.75087837525351,
+        "lng": -73.99341724144254
+    },
+    {
+        "title":"Yankee Stadium",
+        "subtitle": "1 E 161 St, The Bronx, NY 10451",
+        "lat": 40.82978868277531,
+        "lng": -73.92613157997857
+    },
+    {
+        "title":"The Plaza - A Fairmont Managed Hotel",
+        "subtitle": "768 5th Ave, New York, NY 10019",
+        "lat": 40.764664081450015,
+        "lng": -73.97439113386783
+    },
+    {
+        "title":"The Metropolitan Museum of Art",
+        "subtitle": "1000 5th Ave, New York, NY 10028",
+        "lat": 40.77961528933456,
+        "lng": -73.96315816332515
+    },
+    {
+        "title":"Rockefeller Center",
+        "subtitle": "45 Rockefeller Plaza, New York, NY 10111",
+        "lat": 40.75893519970247,
+        "lng": -73.97865213612444
+    },
+    {
+        "title":"Brooklyn Bridge",
+        "subtitle": "Brooklyn Bridge, New York, NY 10038",
+        "lat": 40.70624856417873,
+        "lng": -73.99684257850433
+    },
+    {
+        "title":"Barclays Center",
+        "subtitle": "620 Atlantic Ave, Brooklyn, NY 11217",
+        "lat": 40.68284985904167,
+        "lng": -73.97540486475123
+    },
+    {
+        "title":"Brooklyn Museum",
+        "subtitle": "200 Eastern Pkwy, Brooklyn, NY 11238",
+        "lat": 40.67136890583843,
+        "lng": -73.96356622166782
+    },
+    {
+        "title":"Brooklyn Botanic Garden",
+        "subtitle": "990 Washington Ave, Brooklyn, NY 11225",
+        "lat": 40.6696645733757,
+        "lng": -73.96249366636314
+    },
+    {
+        "title":"New York Aquarium",
+        "subtitle": "602 Surf Ave, Brooklyn, NY 11224",
+        "lat": 40.575524277109025,
+        "lng": -73.9746573809431
+    },
+    {
+        "title":"Smorgasburg",
+        "subtitle": "90 Kent Ave, Brooklyn, NY 11211",
+        "lat": 40.72130134144984,
+        "lng": -73.96256093584853
+    },
+    {
+        "title":"Dekalb Market Hall",
+        "subtitle": "445 Albee Square W, Brooklyn, NY 11201",
+        "lat": 40.690587163585754,
+        "lng": -73.98285943416336
+    },
+    {
+        "title":"BAM Strong",
+        "subtitle": "651 Fulton St, Brooklyn, NY 11217",
+        "lat": 40.68875953504821,
+        "lng": -73.97868926555024
+    },
+    {
+        "title":"Empire State Building",
+        "subtitle": "20 W 34th St, New York, NY 10001",
+        "lat": 40.748627401131884,
+        "lng": -73.98560002082867
+    }
+]
