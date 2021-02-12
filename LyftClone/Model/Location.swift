@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Location {
+class Location: Codable {
     var title: String
     var subtitle: String
     let lat: Double
