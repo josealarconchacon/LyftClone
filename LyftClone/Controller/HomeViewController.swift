@@ -47,6 +47,12 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate {
         // stop updating the location when the user doesn't need it anymore
         locationManager.stopUpdatingLocation()
     }
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if status == .authorizedWhenInUse {
+            locationManager.startUpdatingLocation()
+        }
+    }
 }
 
 
