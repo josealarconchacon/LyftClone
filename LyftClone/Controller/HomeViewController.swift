@@ -8,12 +8,15 @@
 import UIKit
 import CoreLocation
 
-class HomeViewController: UIViewController {
+class HomeViewController: UIViewController, CLLocationManagerDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchButton: UIButton!
     
     var locations = [Location]()
+    
+    var locationManager: CLLocationManager!
+    var currentUserLocation: Location!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,8 +24,28 @@ class HomeViewController: UIViewController {
         tableView.delegate = self
         let recent_location = LocationService.share.get_recent_location()
         locations = [recent_location[0], recent_location[1]]
+        
+        location_manager()
+        
         // Add shadow to searchButton
         searchButton.search_bar()
+    }
+    
+    func location_manager() {
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        if locationManager.authorizationStatus == .authorizedWhenInUse {
+            locationManager.startUpdatingLocation()
+        }
+    }
+    
+    // get the location update
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let first_location = locations.first!
+        currentUserLocation = Location(title: "Current Location", subtitle: "", lat: first_location.coordinate.latitude, lng: first_location.coordinate.longitude)
+        // stop updating the location when the user doesn't need it anymore
+        locationManager.stopUpdatingLocation()
     }
 }
 
