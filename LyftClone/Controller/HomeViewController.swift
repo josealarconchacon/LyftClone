@@ -7,8 +7,9 @@
 
 import UIKit
 import CoreLocation
+import MapKit
 
-class HomeViewController: UIViewController, CLLocationManagerDelegate {
+class HomeViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchButton: UIButton!
@@ -53,10 +54,42 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate {
             locationManager.startUpdatingLocation()
         }
     }
+    
+    func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
+        // zoom in to the user location
+        let distance = 200.0
+        let region = MKCoordinateRegion(center: userLocation.coordinate, latitudinalMeters: distance, longitudinalMeters: distance)
+        mapView.setRegion(region, animated: true)
+        
+        let lat = userLocation.coordinate.latitude
+        let lng = userLocation.coordinate.longitude
+        let offset = 0.00075
+        let coord1 = CLLocationCoordinate2D(latitude: lat - offset, longitude: lng - offset)
+        let coord2 = CLLocationCoordinate2D(latitude: lat, longitude: lng + offset)
+        let coord3 = CLLocationCoordinate2D(latitude: lat, longitude: lng - offset)
+        let coord4 = CLLocationCoordinate2D(latitude: lat - offset, longitude: lng + offset)
+        
+        // create vehicle annotation and add it to mapview
+        mapView.addAnnotations([
+            Vehicle(coordinate: coord1),
+            Vehicle(coordinate: coord2),
+            Vehicle(coordinate: coord3),
+            Vehicle(coordinate: coord4)
+        ])
+    }
+    
+    // custom annotation view
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        if annotation is MKUserLocation {
+            return nil
+        }
+        // create custom annotation view with vehicle image
+        
+    }
 }
 
 
-extension HomeViewController: UITableViewDataSource {
+extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return locations.count
     }
@@ -69,6 +102,3 @@ extension HomeViewController: UITableViewDataSource {
     }
 }
 
-extension HomeViewController: UITableViewDelegate {
-    
-}
