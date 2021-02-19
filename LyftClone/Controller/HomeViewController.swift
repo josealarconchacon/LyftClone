@@ -67,14 +67,12 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, MKMapView
         let coord1 = CLLocationCoordinate2D(latitude: lat - offset, longitude: lng - offset)
         let coord2 = CLLocationCoordinate2D(latitude: lat, longitude: lng + offset)
         let coord3 = CLLocationCoordinate2D(latitude: lat, longitude: lng - offset)
-        let coord4 = CLLocationCoordinate2D(latitude: lat - offset, longitude: lng + offset)
         
         // create vehicle annotation and add it to mapview
         mapView.addAnnotations([
             Vehicle(coordinate: coord1),
             Vehicle(coordinate: coord2),
-            Vehicle(coordinate: coord3),
-            Vehicle(coordinate: coord4)
+            Vehicle(coordinate: coord3)
         ])
     }
     
@@ -92,6 +90,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, MKMapView
             annotationView?.annotation = annotation
         }
         annotationView?.image = UIImage(named: "car")
+        annotationView?.transform = CGAffineTransform(rotationAngle: CGFloat(arc4random_uniform(360) * 180) / CGFloat.pi)
         return annotationView
     }
 }
