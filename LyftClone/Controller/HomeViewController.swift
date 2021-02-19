@@ -84,7 +84,15 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, MKMapView
             return nil
         }
         // create custom annotation view with vehicle image
-        
+        let reuseIdentifier = "Vehicle"
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseIdentifier)
+        if annotationView == nil {
+            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseIdentifier)
+        } else {
+            annotationView?.annotation = annotation
+        }
+        annotationView?.image = UIImage(named: "car")
+        return annotationView
     }
 }
 
