@@ -9,12 +9,14 @@ import UIKit
 
 class LocationViewController: UIViewController {
     
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var dropoffTextField: UITextField!
+    
+    
     // colletion of locations
     var locations = [Location]()
     var pickup: Location?
     var dropoff: Location?
-    
-    @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,10 +24,21 @@ class LocationViewController: UIViewController {
         tableView.dataSource = self
         
         locations = LocationService.share.get_recent_location()
+        dropoffTextField.becomeFirstResponder()
+        dropoffTextField.delegate = self
     }
 }
 
-extension LocationViewController: UITableViewDataSource, UITableViewDelegate {
+extension LocationViewController: UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
+    
+    // textField delegate protocol
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let lastesString = (textField.text as! NSString).replacingCharacters(in: range, with: string)
+        print("Last string: \(lastesString)")
+        return true
+    }
+    
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return locations.count
     }
