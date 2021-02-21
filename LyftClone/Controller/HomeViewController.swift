@@ -32,6 +32,11 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, MKMapView
         searchButton.search_bar()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = true
+    }
+    
     func location_manager() {
         locationManager = CLLocationManager()
         locationManager.delegate = self
