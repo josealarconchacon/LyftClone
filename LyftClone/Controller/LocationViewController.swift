@@ -33,6 +33,11 @@ class LocationViewController: UIViewController {
         
         searchCompleted.delegate = self
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = false
+    }
 }
 
 extension LocationViewController: UITableViewDataSource, UITableViewDelegate {
@@ -61,7 +66,7 @@ extension LocationViewController: UITableViewDataSource, UITableViewDelegate {
 extension LocationViewController:  UITextFieldDelegate, MKLocalSearchCompleterDelegate {
     // a later string that the user has typed
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let lastesString = (textField.text as! NSString).replacingCharacters(in: range, with: string)
+        let lastesString = (textField.text! as NSString).replacingCharacters(in: range, with: string)
         print("Last string: \(lastesString)")
         
         if lastesString.count > 3 {
