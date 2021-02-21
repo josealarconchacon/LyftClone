@@ -38,6 +38,10 @@ class LocationViewController: UIViewController {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = false
     }
+    
+    @IBAction func cancelDidTapped(_ sender: UIBarButtonItem) {
+        navigationController?.popViewController(animated: true)
+    }
 }
 
 extension LocationViewController: UITableViewDataSource, UITableViewDelegate {
