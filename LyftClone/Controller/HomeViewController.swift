@@ -37,6 +37,13 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, MKMapView
         navigationController?.isNavigationBarHidden = true
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // passing data between home and location vc
+        if let locationViewController = segue.description as? LocationViewController {
+            locationViewController.pickup = currentUserLocation
+        }
+    }
+    
     func location_manager() {
         locationManager = CLLocationManager()
         locationManager.delegate = self
