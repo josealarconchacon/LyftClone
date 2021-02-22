@@ -14,6 +14,8 @@ class RouteViewController: UIViewController {
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var selecteRideButton: UIButton!
     
+    var selectedIndex = 1
+    
     var pickupLocation: Location?
     var dropoffLocation: Location?
     var ride = [Ride]()
@@ -41,13 +43,11 @@ class RouteViewController: UIViewController {
         
         ride = RideService.share.getRide(pickupLocation: pickupLocation!, dropoffLocation: dropoffLocation!)
     }
-    
-    
-    @IBAction func selectedRideButtonDidTaped(_ sender: UIButton) {
-    }
+
 }
 
 extension RouteViewController: UITableViewDataSource, UITableViewDelegate  {
+    // da
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return ride.count
     }
@@ -57,6 +57,15 @@ extension RouteViewController: UITableViewDataSource, UITableViewDelegate  {
         
         let rides = ride[indexPath.row]
         cell.update(ride: rides)
+        cell.updateSelectedStatus(status: indexPath.row == selectedIndex)
         return cell
+    }
+    
+    //de
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedIndex = indexPath.row
+        let selected_ride = ride[indexPath.row]
+        selecteRideButton.setTitle("Select \(selected_ride.name)", for: .normal)
+        tableView.reloadData()
     }
 }
