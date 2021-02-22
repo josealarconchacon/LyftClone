@@ -15,6 +15,17 @@ class RideCell: UITableViewCell {
     @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     
+    
+    func updateSelectedStatus(status: Bool) {
+        if status {
+            contentView.layer.cornerRadius = 5.0
+            contentView.layer.borderWidth = 2.0
+            contentView.layer.borderColor = UIColor(red: 149.0 / 255.0, green: 67.0 / 255, blue: 255.0 / 255.0, alpha: 1.0).cgColor
+        } else {
+            contentView.layer.borderWidth = 0.0
+        }
+    }
+    
     func update(ride: Ride) {
         rideImage.image = UIImage(named: ride.thumbnail)
         titleLabel.text = ride.name
@@ -24,6 +35,6 @@ class RideCell: UITableViewCell {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "hh:mma"
         
-        titleLabel.text = dateFormatter.string(from: ride.time)
+        timeLabel.text = dateFormatter.string(from: ride.time)
     }
 }
