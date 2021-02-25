@@ -6,13 +6,16 @@
 //
 
 import UIKit
+import MapKit
 
-class RouteViewController: UIViewController {
+class RouteViewController: UIViewController, MKMapViewDelegate {
     
+    @IBOutlet weak var routeMapView: MKMapView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var routeLableView: UIView!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var selecteRideButton: UIButton!
+    
     
     var selectedIndex = 1
     
@@ -27,6 +30,7 @@ class RouteViewController: UIViewController {
         
         view_button_layout()
         location()
+        mapView_annotation()
     }
     
     func view_button_layout() {
@@ -40,10 +44,20 @@ class RouteViewController: UIViewController {
         let location = LocationService.share.get_recent_location()
         pickupLocation = location[0]
         dropoffLocation = location[1]
-        
         ride = RideService.share.getRide(pickupLocation: pickupLocation!, dropoffLocation: dropoffLocation!)
     }
+    
+    // Add annotation to mapView
+    func mapView_annotation() {
+        let pickup = CLLocationCoordinate2D(latitude: pickupLocation!.lat, longitude: pickupLocation!.lng)
+        let dropoff = CLLocationCoordinate2D(latitude: dropoffLocation!.lat, longitude: dropoffLocation!.lng)
+        let pickup_annotation = LocationAnnotation(coordinate: pickup, location_type: "pickup")
+        let dropoff_annotation = LocationAnnotation(coordinate: dropoff, location_type: "dropoff")
+        routeMapView.addAnnotations([pickup_annotation, dropoff_annotation])
+        
+        routeMapView.delegate = self
 
+    }
 }
 
 extension RouteViewController: UITableViewDataSource, UITableViewDelegate  {
@@ -67,5 +81,25 @@ extension RouteViewController: UITableViewDataSource, UITableViewDelegate  {
         let selected_ride = ride[indexPath.row]
         selecteRideButton.setTitle("Select \(selected_ride.name)", for: .normal)
         tableView.reloadData()
+    }
+    
+    // costume annotation view
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        if annotation is MKUserLocation { // will not provide a custom view for user location
+            return nil
+        }
+        let identifire = "LocationAnnotation"
+        var annotationView = routeMapView.dequeueReusableAnnotationView(withIdentifier: identifire)
+        // if don't get an annotation from the identifier,created it
+        if annotationView == nil {
+            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: identifire)
+        } else {
+            annotationView!.annotation = annotation
+        }
+        
+        // custom annotation image view
+        let locationAnnotation = annotation as! LocationAnnotation
+        annotationView?.image = UIImage(named: "dot-\(locationAnnotation.location_type)")
+        return annotationView
     }
 }
