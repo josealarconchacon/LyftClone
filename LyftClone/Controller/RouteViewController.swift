@@ -15,6 +15,8 @@ class RouteViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var routeLableView: UIView!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var selecteRideButton: UIButton!
+    @IBOutlet weak var pickupLabel: UILabel!
+    @IBOutlet weak var dropoffLabel: UILabel!
     
     
     var selectedIndex = 1
@@ -44,6 +46,10 @@ class RouteViewController: UIViewController, MKMapViewDelegate {
         let location = LocationService.share.get_recent_location()
         pickupLocation = location[0]
         dropoffLocation = location[1]
+        
+        pickupLabel.text = pickupLocation?.title
+        dropoffLabel.text = dropoffLocation?.title
+        
         ride = RideService.share.getRide(pickupLocation: pickupLocation!, dropoffLocation: dropoffLocation!)
     }
     
