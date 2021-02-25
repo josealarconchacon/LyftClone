@@ -21,8 +21,8 @@ class RouteViewController: UIViewController, MKMapViewDelegate {
     
     var selectedIndex = 1
     
-    var pickupLocation: Location?
-    var dropoffLocation: Location?
+    var pickupLocation: Location!
+    var dropoffLocation: Location!
     var ride = [Ride]()
     
     override func viewDidLoad() {
@@ -31,7 +31,7 @@ class RouteViewController: UIViewController, MKMapViewDelegate {
         tableView.delegate = self
         
         view_button_layout()
-        location()
+        location_lable()
         mapView_annotation()
     }
     
@@ -42,11 +42,7 @@ class RouteViewController: UIViewController, MKMapViewDelegate {
         selecteRideButton.layer.cornerRadius = 10.0
     }
     
-    func location() {
-        let location = LocationService.share.get_recent_location()
-        pickupLocation = location[0]
-        dropoffLocation = location[1]
-        
+    func location_lable() {
         pickupLabel.text = pickupLocation?.title
         dropoffLabel.text = dropoffLocation?.title
         
