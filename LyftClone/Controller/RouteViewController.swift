@@ -56,7 +56,39 @@ class RouteViewController: UIViewController, MKMapViewDelegate {
         routeMapView.addAnnotations([pickup_annotation, dropoff_annotation])
         
         routeMapView.delegate = self
+        
+        displayRoute(sourceLocation: pickupLocation!, destinationLocation: dropoffLocation!)
 
+    }
+    
+    func displayRoute(sourceLocation: Location, destinationLocation: Location) {
+        let source_coordinate = CLLocationCoordinate2D(latitude: sourceLocation.lat, longitude: sourceLocation.lng)
+        let destination_coordinate = CLLocationCoordinate2D(latitude: destinationLocation.lat, longitude: destinationLocation.lng)
+        let source_place_mark = MKPlacemark(coordinate: source_coordinate)
+        let destination_place_mark = MKPlacemark(coordinate: destination_coordinate)
+        
+        let direction_request = MKDirections.Request()
+        direction_request.source = MKMapItem(placemark: source_place_mark)
+        direction_request.destination = MKMapItem(placemark: destination_place_mark)
+        direction_request.transportType = .automobile
+        
+        let directions = MKDirections(request: direction_request)
+        directions.calculate { (directionResponse, error) in
+            if let error = error {
+                print("Error calculation route: \(error.localizedDescription)")
+            }
+            guard let directionResponse = directionResponse  else { return }
+            
+            let route = directionResponse.routes[0]
+            self.routeMapView.addOverlay(route.polyline, level: .aboveRoads)
+            
+            let adge: CGFloat = 80.0
+            let boundingMapRect = route.polyline.boundingMapRect
+            self.routeMapView.setVisibleMapRect(boundingMapRect, edgePadding: UIEdgeInsets(top: adge,
+                                                                                           left: adge,
+                                                                                           bottom: adge,
+                                                                                           right: adge), animated: true)
+        }
     }
 }
 
@@ -81,6 +113,13 @@ extension RouteViewController: UITableViewDataSource, UITableViewDelegate  {
         let selected_ride = ride[indexPath.row]
         selecteRideButton.setTitle("Select \(selected_ride.name)", for: .normal)
         tableView.reloadData()
+    }
+    
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        let renderer = MKPolylineRenderer(overlay: overlay)
+        renderer.lineWidth = 5.0
+        renderer.strokeColor = UIColor(red: 247.0 / 255.0, green: 66.0 / 255, blue: 190.0 / 255.0, alpha: 1)
+        return renderer
     }
     
     // costume annotation view
