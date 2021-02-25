@@ -41,6 +41,9 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, MKMapView
         // passing data between home and location vc
         if let locationViewController = segue.description as? LocationViewController {
             locationViewController.pickup = currentUserLocation
+        } else if let route_view_controller = segue.destination as? RouteViewController, let dropoffLocation = sender as? Location {
+            route_view_controller.pickupLocation = currentUserLocation
+            route_view_controller.dropoffLocation = dropoffLocation
         }
     }
     
@@ -109,6 +112,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, MKMapView
 
 
 extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
+    // DataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return locations.count
     }
@@ -119,5 +123,12 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         cell.update(location: location)
         return cell
     }
+    
+    // Delegate
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let dropoff_location = locations[indexPath.row]
+        performSegue(withIdentifier: "RouteSegue", sender: dropoff_location)
+    }
 }
+
 
