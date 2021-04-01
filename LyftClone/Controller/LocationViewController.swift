@@ -44,6 +44,7 @@ class LocationViewController: UIViewController {
     }
 }
 
+
 extension LocationViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return searchResult.isEmpty ? locations.count : searchResult.count
@@ -62,6 +63,27 @@ extension LocationViewController: UITableViewDataSource, UITableViewDelegate {
         }
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if searchResult.isEmpty {
+            let location = locations[indexPath.row]
+            performSegue(withIdentifier: "RouteSegue", sender: location)
+        } else {
+            // convert search_result into a location object
+            let search_result = searchResult[indexPath.row]
+            let search_request = MKLocalSearch.Request(completion: search_result)
+            let search = MKLocalSearch(request: search_request)
+            search.start(completionHandler: {(response, error) in
+                if error == nil {
+                    if let dropoffPlaceMark = response?.mapItems.first?.placemark {
+                        // convert PlaceMark into a location Object
+                        let location = Location(placemark: dropoffPlaceMark)
+                        self.performSegue(withIdentifier: "RouteSegue", sender: location)
+                    }
+                }
+            })
+        }
     }
 }
 
@@ -83,5 +105,13 @@ extension LocationViewController:  UITextFieldDelegate, MKLocalSearchCompleterDe
         searchResult = completer.results
         // reload tableView
         tableView.reloadData()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let routeViewController = segue.destination as? RouteViewController,
+           let dropoffLocation = sender as? Location {
+            routeViewController.pickupLocation = pickup
+            routeViewController.dropoffLocation = dropoffLocation
+        }
     }
 }

@@ -39,7 +39,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, MKMapView
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // passing data between home and location vc
-        if let locationViewController = segue.description as? LocationViewController {
+        if let locationViewController = segue.destination as? LocationViewController {
             locationViewController.pickup = currentUserLocation
         } else if let route_view_controller = segue.destination as? RouteViewController, let dropoffLocation = sender as? Location {
             route_view_controller.pickupLocation = currentUserLocation

@@ -43,9 +43,8 @@ class RouteViewController: UIViewController, MKMapViewDelegate {
     }
     
     func location_lable() {
-        pickupLabel.text = pickupLocation?.title
-        dropoffLabel.text = dropoffLocation?.title
-        
+        pickupLabel.text = pickupLocation.title
+        dropoffLabel.text = dropoffLocation.title
         ride = RideService.share.getRide(pickupLocation: pickupLocation!, dropoffLocation: dropoffLocation!)
     }
     
