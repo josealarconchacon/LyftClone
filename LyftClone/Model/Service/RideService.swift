@@ -26,9 +26,9 @@ class RideService {
         let minimum_amount = 3.0
         
         return [
-            Ride(thumbnail: "ride-shared", name: "Shared", capacity: "1-2", price: minimum_amount + (distance * 0.5), time: Date()),
-            Ride(thumbnail: "ride-compact", name: "Shared", capacity: "1-4", price: minimum_amount +  (distance * 0.9), time: Date()),
-            Ride(thumbnail: "ride-large", name: "Shared", capacity: "1-6", price: minimum_amount + (distance * 1.5), time: Date())
+            Ride(thumbnail: "ride-shared", name: "Shared", capacity: "1-2", price: minimum_amount + (distance * 0.0005), time: Date()),
+            Ride(thumbnail: "ride-compact", name: "Compact", capacity: "4", price: minimum_amount +  (distance * 0.0009), time: Date()),
+            Ride(thumbnail: "ride-large", name: "Large", capacity: "6", price: minimum_amount + (distance * 0.0015), time: Date())
         ]
     }
 }

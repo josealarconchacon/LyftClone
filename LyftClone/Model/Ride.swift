@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import MapKit
 
 // Ride file is the data that user see when selecting a ride
 class Ride {
